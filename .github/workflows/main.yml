@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+  
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+  
+      - name: Setup Python
+        uses: actions/setup-python@v5
+  
+      - name: Install Tools
+        run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+  
+      - name: Build
+        run: python setup.py build_ext --inplace
+  
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: ./*
