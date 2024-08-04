@@ -18,7 +18,9 @@ jobs:
         run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
   
       - name: Build
-        run: python setup.py build_ext --inplace
+        run: |
+          pip install -r requirements.txt
+          python setup.py build_ext --inplace
   
       - name: Upload
         uses: actions/upload-artifact@v2
